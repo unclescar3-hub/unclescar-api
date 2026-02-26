@@ -25,10 +25,15 @@ app.post('/paystack-webhook', async (req, res) => {
             const email = data.customer.email;
             const amount = data.amount; // Remember: Paystack sends this in kobo!
 
-            // Extract the DLS Team Name from the custom fields we set up on Paystack
+            // Extract the Team Name (Works for both DLS and eFootball)
             let teamName = "Unknown Player"; 
             if (data.metadata && data.metadata.custom_fields) {
-                const teamField = data.metadata.custom_fields.find(field => field.display_name === "DLS Team Name");
+                const teamField = data.metadata.custom_fields.find(field => 
+                    field.display_name === "DLS Team Name" || 
+                    field.display_name === "eFootball Team Name" ||
+                    field.display_name === "Team Name" ||
+                    field.display_name === "Username"
+                );
                 if (teamField) {
                     teamName = teamField.value;
                 }
@@ -40,12 +45,13 @@ app.post('/paystack-webhook', async (req, res) => {
             let tournamentId = '';
             
             if (amount === 100000) { 
-                // ₦1,000 Entry Fee -> Send to Academy
-                tournamentId = 'unclescar_academy_01'; 
+                // ₦1,000 Entry Fee -> Send to DLS Academy
+                tournamentId = 'unclescaracademy1'; 
                 
             } else if (amount === 150000) { 
-                // ₦1,500 Entry Fee -> Send to Knockouts
-                tournamentId = 'unclescar_knockouts_01'; 
+                // ₦1,500 Entry Fee -> Send to eFootball Launch Cup
+                // NOTE TO CEO: REPLACE THE TEXT BELOW WITH YOUR EFOOTBALL CHALLONGE ID
+                tournamentId = 'YOUR_EFOOTBALL_CHALLONGE_ID_HERE'; 
                 
             } else if (amount === 500000) { 
                 // ₦5,000 Entry Fee -> Send to UPL Pro League
