@@ -50,8 +50,7 @@ app.post('/paystack-webhook', async (req, res) => {
                 
             } else if (amount === 150000) { 
                 // ₦1,500 Entry Fee -> Send to eFootball Launch Cup
-                // NOTE TO CEO: REPLACE THE TEXT BELOW WITH YOUR EFOOTBALL CHALLONGE ID
-                tournamentId = 'YOUR_EFOOTBALL_CHALLONGE_ID_HERE'; 
+                tournamentId = 'unclescarefootball1'; 
                 
             } else if (amount === 500000) { 
                 // ₦5,000 Entry Fee -> Send to UPL Pro League
